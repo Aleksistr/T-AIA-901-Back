@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ArthurHertz420/T-AIA-901-Back#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "ibm-watson": "^5.7.0",

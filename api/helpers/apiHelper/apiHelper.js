@@ -3,7 +3,10 @@ const apis = require('./apis.json');
 
 const getApiKeyForIBM = function () {
   return new Promise((resolve, rejected) => {
-    resolve(apis["1"].value);
+    resolve({
+      value: api[1].value,
+      url: api[1].url
+    });
   });
 };
 
