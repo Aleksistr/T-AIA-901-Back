@@ -4,6 +4,7 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 // Import other required libraries
 const fs = require('fs');
 const util = require('util');
+
 // Creates a client
 const client = new textToSpeech.TextToSpeechClient();
 
