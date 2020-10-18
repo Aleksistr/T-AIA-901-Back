@@ -11,6 +11,6 @@ app.use('/api/', routes)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(8080, () => {
+app.listen(3000, () => {
     console.log("Serveur à l'écoute")
 })
