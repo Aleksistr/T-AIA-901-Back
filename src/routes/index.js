@@ -5,7 +5,7 @@ const router = express.Router();
 const sttController = require("../controllers/SttController");
 
 // Audio file transcription
-router.get('/stt/audio', sttController.transcriptByAudio);
+router.post('/stt/audio', sttController.transcriptByAudio);
 
 // Voice record transcription
 router.get('/stt/vocal', sttController.transcriptByVocal);
@@ -14,6 +14,6 @@ router.get('/stt/vocal', sttController.transcriptByVocal);
 const ttsController = require("../controllers/TtsController");
 
 // Audio file transcription
-router.get('/tts/audio', ttsController.convertToAudio);
+router.post('/tts/text', ttsController.convertToAudio);
 
 module.exports = router

@@ -1,3 +1,5 @@
+const statusCode = require('http-status-codes');
+
 // Imports the Google Cloud client library
 const textToSpeech = require('@google-cloud/text-to-speech');
 
@@ -9,8 +11,13 @@ const util = require('util');
 const client = new textToSpeech.TextToSpeechClient();
 
 const convertToAudio = async (req, res) => {
+    if (!req.body.text_to_speech) {
+        return res.status(statusCode.BAD_REQUEST)
+            .json('text_to_speech field is required in body params');
+    }
+
     // The text to synthesize
-    const text = 'test test';
+    const text = req.body.text_to_speech;
 
     // Construct the request
     const request = {
@@ -26,7 +33,8 @@ const convertToAudio = async (req, res) => {
     // Write the binary audio content to a local file
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(__dirname + '/../resources/output.wav', response.audioContent);
-    res.send('done');
+    return res.status(statusCode.OK)
+        .json('OK');
 }
 
 module.exports = {convertToAudio}

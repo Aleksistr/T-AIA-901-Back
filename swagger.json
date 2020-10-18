@@ -1,0 +1,82 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "STT & TTS Routes",
+    "description": "Speech To Text and Text To Speech routes"
+  },
+  "host": "localhost:8080",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/stt/audio": {
+      "post": {
+        "tags": [
+          "STT"
+        ],
+        "summary": "Upload audio file to resources folder (./src/resources/) and load file with his filename",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "filename",
+            "description": "Example: {\"filename\": \"audio.wav\"}",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "filename field is required in body params"
+          }
+        }
+      }
+    },
+    "/stt/vocal": {
+      "get": {
+        "tags": [
+          "STT"
+        ],
+        "summary": "Transform streaming audio to text",
+        "description": ""
+      }
+    },
+    "/tts/text": {
+      "post": {
+        "tags": [
+          "TTS"
+        ],
+        "summary": "Transform text to speech and save it to resources folder with output.wav name",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "text_to_speech",
+            "description": "Example: {\"text_to_speech\": \"Ceci est un test\"}",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "text_to_speech field is required in body params"
+          }
+        }
+      }
+    }
+  }
+}

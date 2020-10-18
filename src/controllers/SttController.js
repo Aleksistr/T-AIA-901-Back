@@ -1,4 +1,13 @@
+const statusCode = require('http-status-codes');
+
 const transcriptByAudio = async (req, res) => {
+    if (!req.body.filename) {
+        return res.status(statusCode.BAD_REQUEST)
+            .json('filename field is required in body params');
+    }
+
+    let filename = req.body.filename;
+
     // Imports the Google Cloud client library
     const speech = require('@google-cloud/speech');
     const fs = require('fs');
@@ -7,7 +16,7 @@ const transcriptByAudio = async (req, res) => {
     const client = new speech.SpeechClient();
 
     // The name of the audio file to transcribe
-    const fileName = __dirname + '/../resources/audio.wav';
+    const fileName = __dirname + '/../resources/' + filename;
 
     // Reads a local audio file and converts it to base64
     const file = fs.readFileSync(fileName);
@@ -35,7 +44,8 @@ const transcriptByAudio = async (req, res) => {
     const transcription = response.results
         .map(result => result.alternatives[0].transcript)
         .join('\n');
-    res.send(`${transcription}`);
+    return res.status(statusCode.OK)
+        .json(`${transcription}`);
 }
 
 const transcriptByVocal = async (req, res, next) => {
@@ -61,7 +71,8 @@ const transcriptByVocal = async (req, res, next) => {
         .streamingRecognize(request)
         .on('error', console.error)
         .on('data', data => {
-            res.send(
+            return res.status(statusCode.OK)
+                .json(
                 data.results[0] && data.results[0].alternatives[0]
                     ? `${data.results[0].alternatives[0].transcript}\n`
                     : '\n\nReached transcription time limit, please restart\n'
