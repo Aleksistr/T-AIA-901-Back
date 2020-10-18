@@ -11,6 +11,7 @@ app.use('/api/', routes)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Serveur à l'écoute")
+let port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Serveur à l'écoute ${port}`)
 })
