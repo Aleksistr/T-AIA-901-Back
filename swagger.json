@@ -54,7 +54,7 @@
         "tags": [
           "TTS"
         ],
-        "summary": "Transform text to speech and save it to resources folder with output.wav name",
+        "summary": "Return to front text to speech",
         "description": "",
         "consumes": [
           "application/json"
