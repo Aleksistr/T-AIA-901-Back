@@ -5,7 +5,7 @@
     "title": "STT & TTS Routes",
     "description": "Speech To Text and Text To Speech routes"
   },
-  "host": "localhost:8080",
+  "host": "stt-tts-middleware.herokuapp.com",
   "basePath": "/api",
   "schemes": [
     "http"
@@ -14,7 +14,7 @@
     "/stt/audio": {
       "post": {
         "tags": [
-          "STT"
+          "STT (Not working)"
         ],
         "summary": "Upload audio file to resources folder (./src/resources/) and load file with his filename",
         "description": "",
