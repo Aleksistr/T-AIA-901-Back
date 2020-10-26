@@ -8,7 +8,7 @@ const sttController = require("../controllers/SttController");
 router.post('/stt/audio', sttController.transcriptByAudio);
 
 // Voice record transcription
-router.get('/stt/vocal', sttController.transcriptByVocal);
+//router.get('/stt/vocal', sttController.transcriptByVocal);
 
 //// Tts Routes
 const ttsController = require("../controllers/TtsController");

@@ -40,15 +40,6 @@
         }
       }
     },
-    "/stt/vocal": {
-      "get": {
-        "tags": [
-          "STT"
-        ],
-        "summary": "Transform streaming audio to text",
-        "description": ""
-      }
-    },
     "/tts/text": {
       "post": {
         "tags": [
