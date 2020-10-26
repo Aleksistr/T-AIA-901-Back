@@ -14,7 +14,7 @@
     "/stt/audio": {
       "post": {
         "tags": [
-          "STT (Not working)"
+          "STT (Work in progress)"
         ],
         "summary": "Upload audio file to resources folder (./src/resources/) and load file with his filename",
         "description": "",
