@@ -1,33 +1,24 @@
 'use strict'
 
 const statusCode = require('http-status-codes');
-
 const fs = require('fs');
-const http = require('http');
-const url = require('url');
-const path = require('path');
 
 const transcriptByAudio = async (req, res) => {
-    const file_url = req.body.file_url;
-
-    // if (!req.body.filename) {
-    //     return res.status(statusCode.BAD_REQUEST)
-    //         .json('filename field is required in body params');
-    // }
-    //
-    // let filename = req.body.filename;
-
     // Imports the Google Cloud client library
     const speech = require('@google-cloud/speech');
 
     // Creates a client
     const client = new speech.SpeechClient();
 
+    // Upload file to resources directory
+    let blob = req.files.file;
+    await blob.mv(__dirname + '/../resources/output.wav');
+
     // The name of the audio file to transcribe
-    const fileName = __dirname + '/../resources/output.wav';
+    const pathToFile = __dirname + '/../resources/output.wav';
 
     // Reads a local audio file and converts it to base64
-    const file = fs.readFileSync(fileName);
+    const file = fs.readFileSync(pathToFile);
     const audioBytes = file.toString('base64');
 
     // The audio file's encoding, sample rate in hertz, and BCP-47 language code
@@ -53,12 +44,15 @@ const transcriptByAudio = async (req, res) => {
         .map(result => result.alternatives[0].transcript)
         .join('\n');
 
-    console.log("pass")
-    console.log(`${transcription}`)
-    // return res.status(statusCode.OK)
-    //     .json(`${transcription}`);
+    // Post to python text converted and return response to front
+    // ...soon
+
+    // Return response
+    return res.status(statusCode.OK)
+        .json(`${transcription}`);
 }
 
+// No need it
 const transcriptByVocal = async (req, res, next) => {
     const recorder = require('node-record-lpcm16');
 
