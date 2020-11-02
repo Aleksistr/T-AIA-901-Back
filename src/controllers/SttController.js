@@ -46,7 +46,6 @@ const transcriptByAudio = async (req, res) => {
 
     // Post to python text converted and return response to front
     // ...soon
-    console.log(transcription)
 
     // Return response
     return res.status(statusCode.OK)
