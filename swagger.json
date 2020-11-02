@@ -14,9 +14,9 @@
     "/stt/audio": {
       "post": {
         "tags": [
-          "STT (Work in progress)"
+          "STT"
         ],
-        "summary": "Upload audio file to resources folder (./src/resources/) and load file with his filename",
+        "summary": "Upload streaming audio file to resources folder (./src/resources/) and transcript to text his content",
         "description": "",
         "consumes": [
           "application/json"
@@ -28,14 +28,14 @@
           {
             "in": "body",
             "name": "filename",
-            "description": "Example: {\"filename\": \"audio.wav\"}",
+            "description": "Example: {\"file\": \"file data\"}",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "400": {
-            "description": "filename field is required in body params"
+            "description": "file data is missing"
           }
         }
       }
