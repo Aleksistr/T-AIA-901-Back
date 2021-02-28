@@ -2,9 +2,10 @@
 
 const statusCode = require('http-status-codes');
 const fs = require('fs');
+const axios = require('axios');
 
 const transcriptByAudio = async (req, res) => {
-    if (!req.files || !req.files.file) {
+   if (!req.files || !req.files.file) {
         return res.status(statusCode.BAD_REQUEST)
             .json('file data is missing');
     }
@@ -20,6 +21,7 @@ const transcriptByAudio = async (req, res) => {
     await blob.mv(__dirname + '/../resources/output.wav');
 
     // The name of the audio file to transcribe
+    //remplacer audio par output.wav
     const pathToFile = __dirname + '/../resources/output.wav';
 
     // Reads a local audio file and converts it to base64
@@ -46,10 +48,26 @@ const transcriptByAudio = async (req, res) => {
 
         // Get a Promise representation of the final result of the job
         const [response] = await operation.promise();
-        const transcription = response.results
+        let transcription = response.results
             .map(result => result.alternatives[0].transcript)
             .join('\n');
 
+          // requeste axios
+          await axios.post(process.env.APIURL, {
+            textToRecommande: transcription
+          })
+          .then(function (result) {
+            if (result && result.data) {
+                transcription = result.data;
+            }
+          })
+          .catch(function (error) {
+            if (error.response && error.response.data) {
+                transcription = error.response.data;
+            }
+          });
+        
+        
         // Return response
         return res.status(statusCode.OK)
             .json(`${transcription}`);
@@ -58,7 +76,10 @@ const transcriptByAudio = async (req, res) => {
             return res.status(statusCode.FORBIDDEN)
                 .json(e.details);
         }
-
+        if (e.response && e.response.data) {
+            return res.status(statusCode.BAD_REQUEST)
+                .json(transcription);
+        }
         return res.status(statusCode.FORBIDDEN)
             .json('Google credentials is missing');
     }
