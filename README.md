@@ -6,7 +6,9 @@
 ```
 - Generate google credentials json file
 - Download it
-- Launch command : export GOOGLE_APPLICATION_CREDENTIALS="absolute_path_to_file"
+- Add in env :
+    - GOOGLE_CREDENTIALS="credentials_json_content_on_one_line"
+    - GOOGLE_APPLICATION_CREDENTIALS="path_to_project/src/credentials/credentials.json"
 ```
 
 ## Launch application
