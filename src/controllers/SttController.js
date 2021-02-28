@@ -4,11 +4,11 @@ const statusCode = require('http-status-codes');
 const fs = require('fs');
 
 const transcriptByAudio = async (req, res) => {
-    if (!req.files.file) {
+    if (!req.files || !req.files.file) {
         return res.status(statusCode.BAD_REQUEST)
             .json('file data is missing');
     }
-    //
+
     // Imports the Google Cloud client library
     const speech = require('@google-cloud/speech');
 

@@ -6,6 +6,7 @@ const swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('../swagger.json')
 const cors = require('cors')
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
 const app = express()
 
 app.use(fileUpload({
@@ -20,6 +21,10 @@ app.use(bodyParser.json())
 app.use('/api/', routes)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+fs.writeFile(process.env.GOOGLE_APPLICATION_CREDENTIALS, process.env.GOOGLE_CREDENTIALS, (error, data) => {
+    if (error) console.log(error);
+});
 
 let port = process.env.PORT || 3000;
 app.listen(port, () => {
