@@ -8,14 +8,14 @@ const transcriptByAudio = async (req, res) => {
         return res.status(statusCode.BAD_REQUEST)
             .json('file data is missing');
     }
-
+    //
     // Imports the Google Cloud client library
     const speech = require('@google-cloud/speech');
 
     // Creates a client
     const client = new speech.SpeechClient();
-
-    // Upload file to resources directory
+    //
+    // // Upload file to resources directory
     let blob = req.files.file;
     await blob.mv(__dirname + '/../resources/output.wav');
 
@@ -41,20 +41,27 @@ const transcriptByAudio = async (req, res) => {
 
     // Detects speech in the audio file. This creates a recognition job that you
     // can wait for now, or get its result later.
-    const [operation] = await client.longRunningRecognize(request);
+    try {
+        const [operation] = await client.longRunningRecognize(request);
 
-    // Get a Promise representation of the final result of the job
-    const [response] = await operation.promise();
-    const transcription = response.results
-        .map(result => result.alternatives[0].transcript)
-        .join('\n');
+        // Get a Promise representation of the final result of the job
+        const [response] = await operation.promise();
+        const transcription = response.results
+            .map(result => result.alternatives[0].transcript)
+            .join('\n');
 
-    // Post to python text converted and return response to front
-    // ...soon
+        // Return response
+        return res.status(statusCode.OK)
+            .json(`${transcription}`);
+    } catch (e) {
+        if (e.details) {
+            return res.status(statusCode.FORBIDDEN)
+                .json(e.details);
+        }
 
-    // Return response
-    return res.status(statusCode.OK)
-        .json(`${transcription}`);
+        return res.status(statusCode.FORBIDDEN)
+            .json('Google credentials is missing');
+    }
 }
 
 // No need it
