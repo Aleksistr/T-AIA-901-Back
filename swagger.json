@@ -1,0 +1,73 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "STT & TTS Routes",
+    "description": "Speech To Text and Text To Speech routes"
+  },
+  "host": "stt-tts-middleware.herokuapp.com",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/stt/audio": {
+      "post": {
+        "tags": [
+          "STT"
+        ],
+        "summary": "Upload streaming audio file to resources folder (./src/resources/) and transcript to text his content",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "filename",
+            "description": "Example: {\"file\": \"file data\"}",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "file data is missing"
+          }
+        }
+      }
+    },
+    "/tts/text": {
+      "post": {
+        "tags": [
+          "TTS"
+        ],
+        "summary": "Return to front text to speech",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "text_to_speech",
+            "description": "Example: {\"text_to_speech\": \"Ceci est un test\"}",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "text_to_speech field is required in body params"
+          }
+        }
+      }
+    }
+  }
+}
